@@ -1,0 +1,19 @@
+FROM node:16.14.0
+
+RUN npm install -g npm@9.2.0
+
+RUN mkdir -p /game-list
+
+WORKDIR /game-list
+
+COPY package*.json /game-list
+
+RUN npm i
+
+COPY . /game-list
+
+EXPOSE 3000
+
+RUN npm run build
+
+CMD ["npm", "run", "start"]
