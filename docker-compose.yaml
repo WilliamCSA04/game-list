@@ -5,8 +5,21 @@ services: #This section defines all the different containers we will create.
       context: ./client/game-list #This specifies the location of our Dockerfile
     ports: #This is used to map the container’s ports to the host machine.
       - "3000:3000"
+  db:
+    image: postgres:14.1-alpine
+    restart: always
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    ports:
+      - '5432:5432'
+    volumes: 
+      - db:/var/lib/postgresql/data
   game-list-backend: #This is the name of our Nextjs application.
     build: #This specifies the location of our Dockerfile
       context: ./server #This specifies the location of our Dockerfile
     ports: #This is used to map the container’s ports to the host machine.
       - "4000:4000"
+volumes:
+  db:
+    driver: local
