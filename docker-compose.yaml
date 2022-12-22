@@ -6,13 +6,14 @@ services: #This section defines all the different containers we will create.
     ports: #This is used to map the container’s ports to the host machine.
       - "3000:3000"
   db:
-    image: postgres:14.1-alpine
+    image: postgres:14.5
     restart: always
     environment:
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_PORT=${POSTGRES_PORT}
     ports:
-      - '5432:5432'
+      - '${POSTGRES_PORT}:5432'
     volumes: 
       - db:/var/lib/postgresql/data
   game-list-backend: #This is the name of our Nextjs application.
